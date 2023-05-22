@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include imprest_and_petty_cash_management *.css
+recursive-include imprest_and_petty_cash_management *.csv
+recursive-include imprest_and_petty_cash_management *.html
+recursive-include imprest_and_petty_cash_management *.ico
+recursive-include imprest_and_petty_cash_management *.js
+recursive-include imprest_and_petty_cash_management *.json
+recursive-include imprest_and_petty_cash_management *.md
+recursive-include imprest_and_petty_cash_management *.png
+recursive-include imprest_and_petty_cash_management *.py
+recursive-include imprest_and_petty_cash_management *.svg
+recursive-include imprest_and_petty_cash_management *.txt
+recursive-exclude imprest_and_petty_cash_management *.pyc
