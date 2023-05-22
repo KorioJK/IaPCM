@@ -9,8 +9,8 @@ from imprest_and_petty_cash_management import __version__ as version
 setup(
 	name="imprest_and_petty_cash_management",
 	version=version,
-	description="Imprest Requisition and Surrender, Petty Cash Management",
-	author="MCBTechnologies",
+	description="Imprest and Petty Cash Mgmt",
+	author="mcbtechnologiesLTD",
 	author_email="koriojohn59@gmail.com",
 	packages=find_packages(),
 	zip_safe=False,

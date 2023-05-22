@@ -2,8 +2,8 @@ from . import __version__ as app_version
 
 app_name = "imprest_and_petty_cash_management"
 app_title = "Imprest And Petty Cash Management"
-app_publisher = "MCBTechnologies"
-app_description = "Imprest Requisition and Surrender, Petty Cash Management"
+app_publisher = "mcbtechnologiesLTD"
+app_description = "Imprest and Petty Cash Mgmt"
 app_email = "koriojohn59@gmail.com"
 app_license = "MIT"
 
