@@ -97,11 +97,11 @@ frappe.ui.form.on("Imprest Surrender", {
     let remaining = 0;
     $.each(frm.doc.expenditure || [], function(i, d) {
          total += d.amount;
-		 if(d.actual_spent > 0){
+		 if (d.actual_spent > 0) {
+			let row = frm.add_child('accounts');
 			row.debit_in_account_currency = d.actual_spent;
 			row.account = d.expense_account;
-			let row = frm.add_child('accounts');
-		 }
+		}
          if(d.remaining_amount < 0){
              excess += (d.remaining_amount * (-1));
         }else if(d.remaining_amount > 0){
@@ -138,6 +138,16 @@ frappe.ui.form.on("Imprest Surrender", {
          frm.refresh_fields('accounts');
          
         })
+		frappe.get_doc('Company', 'Default Staff Receivable Account').then(doc => {
+			// Access the field value
+		 debitRow.account = doc.default_staff_receivable_account;
+		 frm.refresh_fields('accounts');
+
+			console.log(fieldValue);
+		  }).catch(err => {
+			console.log(err);
+		  });
+		  
 
      
     }

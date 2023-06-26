@@ -443,15 +443,6 @@
    "options": "Auto Repeat"
   },
   {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Imprest Surrender",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
    "fieldname": "imprest_entry",
    "fieldtype": "Link",
    "in_list_view": 1,

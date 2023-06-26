@@ -106,17 +106,54 @@ frappe.ui.form.on("Imprest Requisition and Petty Cash", {
             frm.refresh_fields('accounts');
             
 		})
-		get_party_account(frm, function(account){
-// 			frm.set_value(payment_account_field, account);
-            pacc =account;
-            let debitRow = frm.add_child('accounts');
-            debitRow.debit_in_account_currency = total;
-            debitRow.account =pacc;
-            debitRow.party_type = "Employee";
-            debitRow.party = frm.doc.employee;
-            frm.refresh_fields('accounts');
+		var defaultReceivableAccount = '';
+		frappe.call({
+			method: "frappe.client.get_value",
+			args: {
+				doctype: "Company",
+				filters: {
+					name: frm.doc.company
+				},
+				fieldname: "default_staff_receivable_account"
+			},
+			callback: function(response) {
+				if (response.message) {
+					defaultReceivableAccount = response.message.default_staff_receivable_account;
+					pacc = defaultReceivableAccount;
+					let debitRow = frm.add_child('accounts');
+					debitRow.debit_in_account_currency = total;
+					debitRow.account =pacc;
+					debitRow.party_type = "Employee";
+					debitRow.party = frm.doc.employee;
+					frm.refresh_fields('accounts');
+					console.log(response.message.default_staff_receivable_account);
+				} else {
+					console.log('Unable to find the default receivable account for the company: ' + frm.doc.company);
+				}
+			}
+		});
+		
 
-		})
+
+		// pacc = defaultReceivableAccount;
+		// let debitRow = frm.add_child('accounts');
+		// debitRow.debit_in_account_currency = total;
+		// debitRow.account =pacc;
+		// debitRow.party_type = "Employee";
+		// debitRow.party = frm.doc.employee;
+		// frm.refresh_fields('accounts');
+
+// 		get_party_account(frm, function(account){
+// // 			frm.set_value(payment_account_field, account);
+//             pacc =account;
+//             let debitRow = frm.add_child('accounts');
+//             debitRow.debit_in_account_currency = total;
+//             debitRow.account =pacc;
+//             debitRow.party_type = "Employee";
+//             debitRow.party = frm.doc.employee;
+//             frm.refresh_fields('accounts');
+
+// 		})
         
 
    },
