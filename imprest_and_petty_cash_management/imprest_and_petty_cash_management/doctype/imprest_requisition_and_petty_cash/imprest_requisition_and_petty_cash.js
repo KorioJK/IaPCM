@@ -128,7 +128,7 @@ frappe.ui.form.on("Imprest Requisition and Petty Cash", {
 					frm.refresh_fields('accounts');
 					console.log(response.message.default_staff_receivable_account);
 				} else {
-					console.log('Unable to find the default receivable account for the company: ' + frm.doc.company);
+					alert('Unable to find the default receivable account for the company: ' + frm.doc.company);
 				}
 			}
 		});

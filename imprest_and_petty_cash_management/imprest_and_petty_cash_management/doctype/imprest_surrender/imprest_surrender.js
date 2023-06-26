@@ -95,7 +95,7 @@ frappe.ui.form.on("Imprest Surrender", {
     let total = 0;
     let excess = 0;
     let remaining = 0;
-    $.each(frm.doc.expenditure || [], function(i, d) {
+   		$.each(frm.doc.expenditure || [], function(i, d) {
          total += d.amount;
 		 if (d.actual_spent > 0) {
 			let row = frm.add_child('accounts');
@@ -108,8 +108,8 @@ frappe.ui.form.on("Imprest Surrender", {
              remaining += d.remaining_amount
         }
 
-     }); 
-     if(frm.doc.imprest_entry){
+     	}); 
+     	if(frm.doc.imprest_entry){
          if(excess > 0 || remaining > 0){
              get_payment_mode_account(frm, frm.doc.payment_mode, function(account){             
                  acc = account;
@@ -128,26 +128,43 @@ frappe.ui.form.on("Imprest Surrender", {
             })
              
         }
-     get_party_account(frm, function(account){
-         pacc =account;
-         let debitRow = frm.add_child('accounts');
-         debitRow.credit_in_account_currency = total;
-         debitRow.account =pacc;
-         debitRow.party_type = "Employee";
-         debitRow.party = frm.doc.employee;
-         frm.refresh_fields('accounts');
+		var defaultReceivableAccount = '';
+		frappe.call({
+			method: "frappe.client.get_value",
+			args: {
+				doctype: "Company",
+				filters: {
+					name: frm.doc.company
+				},
+				fieldname: "default_staff_receivable_account"
+			},
+			callback: function(response) {
+				if (response.message) {
+					defaultReceivableAccount = response.message.default_staff_receivable_account;
+					pacc = defaultReceivableAccount;
+					let debitRow = frm.add_child('accounts');
+					debitRow.credit_in_account_currency = total;
+					debitRow.account =pacc;
+					debitRow.party_type = "Employee";
+					debitRow.party = frm.doc.employee;
+					frm.refresh_fields('accounts');
+					console.log(response.message.default_staff_receivable_account);
+				} else {
+					alert('Unable to find the default staff receivable account for the company: ' + frm.doc.company);
+				}
+			}
+		});
+    //  get_party_account(frm, function(account){
+    //      pacc =account;
+        //  let debitRow = frm.add_child('accounts');
+        //  debitRow.credit_in_account_currency = total;
+        //  debitRow.account =pacc;
+        //  debitRow.party_type = "Employee";
+        //  debitRow.party = frm.doc.employee;
+        //  frm.refresh_fields('accounts');
          
-        })
-		frappe.get_doc('Company', 'Default Staff Receivable Account').then(doc => {
-			// Access the field value
-		 debitRow.account = doc.default_staff_receivable_account;
-		 frm.refresh_fields('accounts');
+    //     })
 
-			console.log(fieldValue);
-		  }).catch(err => {
-			console.log(err);
-		  });
-		  
 
      
     }
