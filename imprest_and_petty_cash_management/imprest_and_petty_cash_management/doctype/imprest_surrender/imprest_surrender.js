@@ -136,11 +136,11 @@ frappe.ui.form.on("Imprest Surrender", {
 				filters: {
 					name: frm.doc.company
 				},
-				fieldname: "default_staff_receivable_account"
+				fieldname: "custom_default_receivable_account"
 			},
 			callback: function(response) {
 				if (response.message) {
-					defaultReceivableAccount = response.message.default_staff_receivable_account;
+					defaultReceivableAccount = response.message.custom_default_receivable_account;
 					pacc = defaultReceivableAccount;
 					let debitRow = frm.add_child('accounts');
 					debitRow.credit_in_account_currency = total;
@@ -148,7 +148,7 @@ frappe.ui.form.on("Imprest Surrender", {
 					debitRow.party_type = "Employee";
 					debitRow.party = frm.doc.employee;
 					frm.refresh_fields('accounts');
-					console.log(response.message.default_staff_receivable_account);
+					console.log(response.message.custom_default_receivable_account);
 				} else {
 					alert('Unable to find the default staff receivable account for the company: ' + frm.doc.company);
 				}
